@@ -206,6 +206,14 @@
 
         .btn-danger:hover { background: #fef0f0; }
 
+        .btn-info {
+            background: #e3f2fd;
+            color: #1565c0;
+            border: 2px solid #64b5f6;
+        }
+
+        .btn-info:hover { background: #bbdefb; }
+
         .buttons-row {
             display: flex;
             gap: 15px;
@@ -245,6 +253,45 @@
             font-size: 1rem;
             color: #5a4a20;
             letter-spacing: 1px;
+        }
+
+        /* Main Navigation Tabs */
+        .main-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .main-tab {
+            padding: 15px 30px;
+            border: 2px solid #d4af37;
+            border-radius: 12px;
+            background: #fff;
+            color: #8b6914;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Gveret Levin', Arial, sans-serif;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+        }
+
+        .main-tab:hover {
+            background: #faf6e8;
+        }
+
+        .main-tab.active {
+            background: linear-gradient(135deg, #d4af37, #c9a227);
+            color: #fff;
+        }
+
+        .main-section {
+            display: none;
+        }
+
+        .main-section.active {
+            display: block;
         }
 
         .tabs {
@@ -401,10 +448,128 @@
             transform: translateX(-50%) translateY(0);
         }
 
+        /* Search Box */
+        .search-box {
+            margin-bottom: 20px;
+        }
+
+        .search-box input {
+            width: 100%;
+            max-width: 400px;
+            padding: 12px 20px;
+            font-size: 1.1rem;
+        }
+
+        /* Tremps Board */
+        .tremp-card {
+            background: linear-gradient(135deg, #f8f4e8, #fff);
+            border: 2px solid #e8dcc0;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .tremp-card:hover {
+            border-color: #d4af37;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
+        }
+
+        .tremp-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .tremp-driver {
+            font-size: 1.3rem;
+            color: #8b6914;
+            letter-spacing: 1px;
+        }
+
+        .tremp-seats {
+            background: linear-gradient(135deg, #d4af37, #c9a227);
+            color: #fff;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 1rem;
+        }
+
+        .tremp-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .tremp-detail {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #5a4a20;
+        }
+
+        .tremp-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+        }
+
+        /* Region Summary */
+        .region-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .region-card {
+            background: linear-gradient(135deg, #faf6e8, #fff);
+            border: 2px solid #e8dcc0;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .region-card:hover {
+            border-color: #d4af37;
+            transform: scale(1.02);
+        }
+
+        .region-card.active {
+            border-color: #d4af37;
+            background: linear-gradient(135deg, #f5edcd, #faf6e8);
+        }
+
+        .region-name {
+            font-size: 1.3rem;
+            color: #8b6914;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .region-count {
+            font-size: 2rem;
+            color: #d4af37;
+            font-weight: bold;
+        }
+
+        .region-label {
+            font-size: 0.9rem;
+            color: #5a4a20;
+        }
+
         @media (max-width: 768px) {
             h1 { font-size: 2rem; }
             .form-grid { grid-template-columns: 1fr; }
             .radio-group { flex-direction: column; }
+            .main-tab { padding: 12px 20px; font-size: 1rem; }
         }
 
         @media print {
@@ -421,115 +586,259 @@
             <p class="subtitle">מערכת לתיאום הסעות משתתפים מכל רחבי הארץ לכנסי ה'אומה'</p>
         </header>
 
-        <div class="stats-grid">
-            <div class="stat-box">
-                <span class="stat-number" id="totalParticipants">0</span>
-                <span class="stat-label">סה"כ משתתפים</span>
+        <!-- Main Navigation -->
+        <div class="main-tabs no-print">
+            <button class="main-tab active" onclick="switchMainTab('participants')">👥 משתתפים</button>
+            <button class="main-tab" onclick="switchMainTab('tremps')">🚗 לוח טרמפים</button>
+            <button class="main-tab" onclick="switchMainTab('search')">🔍 חיפוש</button>
+            <button class="main-tab" onclick="switchMainTab('regions')">📊 סיכום אזורים</button>
+        </div>
+
+        <!-- Section: Participants -->
+        <div id="section-participants" class="main-section active">
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <span class="stat-number" id="totalParticipants">0</span>
+                    <span class="stat-label">סה"כ משתתפים</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-number" id="goingCount">0</span>
+                    <span class="stat-label">הלוך בלבד</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-number" id="returningCount">0</span>
+                    <span class="stat-label">חזור בלבד</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-number" id="bothCount">0</span>
+                    <span class="stat-label">הלוך + חזור</span>
+                </div>
             </div>
-            <div class="stat-box">
-                <span class="stat-number" id="goingCount">0</span>
-                <span class="stat-label">הלוך בלבד</span>
+
+            <div class="card no-print">
+                <h2 class="card-title">הוספת משתתף חדש</h2>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="name">שם מלא *</label>
+                        <input type="text" id="name" placeholder="הכנס שם מלא">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">מספר טלפון *</label>
+                        <input type="tel" id="phone" placeholder="050-0000000">
+                    </div>
+                    <div class="form-group">
+                        <label for="region">אזור *</label>
+                        <select id="region">
+                            <option value="">בחר אזור</option>
+                            <option value="north">צפון</option>
+                            <option value="center">מרכז</option>
+                            <option value="shfela">שפלה</option>
+                            <option value="south">דרום</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="city">עיר *</label>
+                        <select id="city" disabled>
+                            <option value="">בחר אזור תחילה</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group" style="margin-top: 20px;">
+                    <label>כיוון הסעה *</label>
+                    <div class="radio-group" id="directionGroup">
+                        <label class="radio-wrapper">
+                            <input type="radio" name="direction" value="both">
+                            <span>🚌↔️🚌 הלוך + חזור</span>
+                        </label>
+                        <label class="radio-wrapper">
+                            <input type="radio" name="direction" value="going">
+                            <span>🚌➡️ הלוך בלבד</span>
+                        </label>
+                        <label class="radio-wrapper">
+                            <input type="radio" name="direction" value="return">
+                            <span>⬅️🚌 חזור בלבד</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="buttons-row">
+                    <button type="button" class="btn btn-primary" id="addBtn">➕ הוסף משתתף</button>
+                    <button type="button" class="btn btn-secondary" id="clearFormBtn">🔄 נקה טופס</button>
+                </div>
             </div>
-            <div class="stat-box">
-                <span class="stat-number" id="returningCount">0</span>
-                <span class="stat-label">חזור בלבד</span>
-            </div>
-            <div class="stat-box">
-                <span class="stat-number" id="bothCount">0</span>
-                <span class="stat-label">הלוך + חזור</span>
+
+            <div class="card">
+                <h2 class="card-title">רשימת משתתפים לפי אזור</h2>
+
+                <div class="tabs-container">
+                    <div class="tabs" id="tabsContainer">
+                        <button class="tab active" data-region="all">
+                            <span class="tab-count" id="count-all">0</span>
+                            הכל
+                        </button>
+                        <button class="tab" data-region="north">
+                            <span class="tab-count" id="count-north">0</span>
+                            צפון
+                        </button>
+                        <button class="tab" data-region="center">
+                            <span class="tab-count" id="count-center">0</span>
+                            מרכז
+                        </button>
+                        <button class="tab" data-region="shfela">
+                            <span class="tab-count" id="count-shfela">0</span>
+                            שפלה
+                        </button>
+                        <button class="tab" data-region="south">
+                            <span class="tab-count" id="count-south">0</span>
+                            דרום
+                        </button>
+                    </div>
+
+                    <div id="tab-all" class="tab-content active"></div>
+                    <div id="tab-north" class="tab-content"></div>
+                    <div id="tab-center" class="tab-content"></div>
+                    <div id="tab-shfela" class="tab-content"></div>
+                    <div id="tab-south" class="tab-content"></div>
+                </div>
+
+                <div class="buttons-row" style="margin-top:20px;">
+                    <button type="button" class="btn btn-whatsapp" id="shareBtn">📱 שתף בוואטסאפ</button>
+                    <button type="button" class="btn btn-danger" onclick="deleteAll()">🗑️ מחק הכל</button>
+                </div>
             </div>
         </div>
 
-        <div class="card no-print">
-            <h2 class="card-title">הוספת משתתף חדש</h2>
-            <div class="form-grid">
-                <div class="form-group">
-                    <label for="name">שם מלא *</label>
-                    <input type="text" id="name" placeholder="הכנס שם מלא">
+        <!-- Section: Tremps -->
+        <div id="section-tremps" class="main-section">
+            <div class="card no-print">
+                <h2 class="card-title">הוספת טרמפ חדש</h2>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="trempDriver">שם הנהג *</label>
+                        <input type="text" id="trempDriver" placeholder="שם הנהג">
+                    </div>
+                    <div class="form-group">
+                        <label for="trempPhone">טלפון *</label>
+                        <input type="tel" id="trempPhone" placeholder="050-0000000">
+                    </div>
+                    <div class="form-group">
+                        <label for="trempRegion">אזור יציאה *</label>
+                        <select id="trempRegion">
+                            <option value="">בחר אזור</option>
+                            <option value="north">צפון</option>
+                            <option value="center">מרכז</option>
+                            <option value="shfela">שפלה</option>
+                            <option value="south">דרום</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="trempCity">עיר יציאה *</label>
+                        <select id="trempCity" disabled>
+                            <option value="">בחר אזור תחילה</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="trempSeats">מקומות פנויים *</label>
+                        <select id="trempSeats">
+                            <option value="">בחר</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="trempTime">שעת יציאה</label>
+                        <input type="time" id="trempTime">
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="phone">מספר טלפון *</label>
-                    <input type="tel" id="phone" placeholder="050-0000000">
+                
+                <div class="form-group" style="margin-top: 20px;">
+                    <label>כיוון *</label>
+                    <div class="radio-group" id="trempDirectionGroup">
+                        <label class="radio-wrapper">
+                            <input type="radio" name="trempDirection" value="both">
+                            <span>🚗↔️ הלוך + חזור</span>
+                        </label>
+                        <label class="radio-wrapper">
+                            <input type="radio" name="trempDirection" value="going">
+                            <span>🚗➡️ הלוך בלבד</span>
+                        </label>
+                        <label class="radio-wrapper">
+                            <input type="radio" name="trempDirection" value="return">
+                            <span>⬅️🚗 חזור בלבד</span>
+                        </label>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="region">אזור *</label>
-                    <select id="region">
-                        <option value="">בחר אזור</option>
-                        <option value="north">צפון</option>
-                        <option value="center">מרכז</option>
-                        <option value="shfela">שפלה</option>
-                        <option value="south">דרום</option>
-                    </select>
+
+                <div class="form-group" style="margin-top: 15px;">
+                    <label for="trempNotes">הערות</label>
+                    <input type="text" id="trempNotes" placeholder="הערות נוספות (אופציונלי)">
                 </div>
-                <div class="form-group">
-                    <label for="city">עיר *</label>
-                    <select id="city" disabled>
-                        <option value="">בחר אזור תחילה</option>
-                    </select>
-                </div>
-            </div>
-            
-            <div class="form-group" style="margin-top: 20px;">
-                <label>כיוון הסעה *</label>
-                <div class="radio-group" id="directionGroup">
-                    <label class="radio-wrapper">
-                        <input type="radio" name="direction" value="both">
-                        <span>🚌↔️🚌 הלוך + חזור</span>
-                    </label>
-                    <label class="radio-wrapper">
-                        <input type="radio" name="direction" value="going">
-                        <span>🚌➡️ הלוך בלבד</span>
-                    </label>
-                    <label class="radio-wrapper">
-                        <input type="radio" name="direction" value="return">
-                        <span>⬅️🚌 חזור בלבד</span>
-                    </label>
+
+                <div class="buttons-row">
+                    <button type="button" class="btn btn-primary" onclick="addTremp()">➕ הוסף טרמפ</button>
+                    <button type="button" class="btn btn-secondary" onclick="clearTrempForm()">🔄 נקה טופס</button>
                 </div>
             </div>
 
-            <div class="buttons-row">
-                <button type="button" class="btn btn-primary" id="addBtn">➕ הוסף משתתף</button>
-                <button type="button" class="btn btn-secondary" id="clearFormBtn">🔄 נקה טופס</button>
+            <div class="card">
+                <h2 class="card-title">לוח טרמפים</h2>
+                <div id="trempsList"></div>
+                
+                <div class="buttons-row" style="margin-top:20px;">
+                    <button type="button" class="btn btn-whatsapp" onclick="shareTrempsWhatsApp()">📱 שתף טרמפים בוואטסאפ</button>
+                    <button type="button" class="btn btn-danger" onclick="deleteAllTremps()">🗑️ מחק כל הטרמפים</button>
+                </div>
             </div>
         </div>
 
-        <div class="card">
-            <h2 class="card-title">רשימת משתתפים לפי אזור</h2>
-
-            <div class="tabs-container">
-                <div class="tabs" id="tabsContainer">
-                    <button class="tab active" data-region="all">
-                        <span class="tab-count" id="count-all">0</span>
-                        הכל
-                    </button>
-                    <button class="tab" data-region="north">
-                        <span class="tab-count" id="count-north">0</span>
-                        צפון
-                    </button>
-                    <button class="tab" data-region="center">
-                        <span class="tab-count" id="count-center">0</span>
-                        מרכז
-                    </button>
-                    <button class="tab" data-region="shfela">
-                        <span class="tab-count" id="count-shfela">0</span>
-                        שפלה
-                    </button>
-                    <button class="tab" data-region="south">
-                        <span class="tab-count" id="count-south">0</span>
-                        דרום
-                    </button>
+        <!-- Section: Search -->
+        <div id="section-search" class="main-section">
+            <div class="card">
+                <h2 class="card-title">🔍 חיפוש משתתפים והסעות</h2>
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="searchText">חיפוש לפי שם / טלפון / עיר</label>
+                        <input type="text" id="searchText" placeholder="הקלד לחיפוש..." oninput="performSearch()">
+                    </div>
+                    <div class="form-group">
+                        <label for="searchRegion">סינון לפי אזור</label>
+                        <select id="searchRegion" onchange="performSearch()">
+                            <option value="">כל האזורים</option>
+                            <option value="north">צפון</option>
+                            <option value="center">מרכז</option>
+                            <option value="shfela">שפלה</option>
+                            <option value="south">דרום</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="searchType">סוג</label>
+                        <select id="searchType" onchange="performSearch()">
+                            <option value="all">הכל</option>
+                            <option value="participants">משתתפים בלבד</option>
+                            <option value="tremps">טרמפים בלבד</option>
+                        </select>
+                    </div>
                 </div>
 
-                <div id="tab-all" class="tab-content active"></div>
-                <div id="tab-north" class="tab-content"></div>
-                <div id="tab-center" class="tab-content"></div>
-                <div id="tab-shfela" class="tab-content"></div>
-                <div id="tab-south" class="tab-content"></div>
+                <div id="searchResults" style="margin-top: 20px;"></div>
             </div>
+        </div>
 
-            <div class="buttons-row" style="margin-top:20px;">
-                <button type="button" class="btn btn-whatsapp" id="shareBtn">📱 שתף בוואטסאפ</button>
-                <button type="button" class="btn btn-danger" onclick="deleteAll()">🗑️ מחק הכל</button>
+        <!-- Section: Regions Summary -->
+        <div id="section-regions" class="main-section">
+            <div class="card">
+                <h2 class="card-title">📊 סיכום לפי אזורים</h2>
+                
+                <div class="region-summary" id="regionSummary"></div>
+                
+                <div id="regionDetails"></div>
             </div>
         </div>
     </div>
@@ -553,9 +862,24 @@
             updateStats();
             showToast('כל הנתונים נמחקו');
         }
+
+        function deleteTremp(index) {
+            tremps.splice(index, 1);
+            saveTremps();
+            renderTremps();
+            showToast('הטרמפ הוסר');
+        }
+
+        function deleteAllTremps() {
+            tremps = [];
+            saveTremps();
+            renderTremps();
+            showToast('כל הטרמפים נמחקו');
+        }
         // ============ END DELETE FUNCTIONS ============
 
         var participants = [];
+        var tremps = [];
         var currentTab = 'all';
 
         var citiesByRegion = {
@@ -572,11 +896,17 @@
             try {
                 var saved = localStorage.getItem('conferenceParticipants3');
                 if (saved) participants = JSON.parse(saved);
-            } catch(e) { participants = []; }
+                var savedTremps = localStorage.getItem('conferenceTremps');
+                if (savedTremps) tremps = JSON.parse(savedTremps);
+            } catch(e) { participants = []; tremps = []; }
         }
 
         function saveData() {
             localStorage.setItem('conferenceParticipants3', JSON.stringify(participants));
+        }
+
+        function saveTremps() {
+            localStorage.setItem('conferenceTremps', JSON.stringify(tremps));
         }
 
         function showToast(msg) {
@@ -586,9 +916,41 @@
             setTimeout(function() { toast.classList.remove('show'); }, 3000);
         }
 
+        // Main Tab Navigation
+        function switchMainTab(tabName) {
+            var tabs = document.querySelectorAll('.main-tab');
+            var sections = document.querySelectorAll('.main-section');
+            
+            tabs.forEach(function(t) { t.classList.remove('active'); });
+            sections.forEach(function(s) { s.classList.remove('active'); });
+            
+            event.target.classList.add('active');
+            document.getElementById('section-' + tabName).classList.add('active');
+            
+            if (tabName === 'regions') renderRegionSummary();
+            if (tabName === 'search') performSearch();
+        }
+
         function updateCities() {
             var regionSelect = document.getElementById('region');
             var citySelect = document.getElementById('city');
+            var region = regionSelect.value;
+            citySelect.innerHTML = '<option value="">בחר עיר</option>';
+            if (region && citiesByRegion[region]) {
+                citySelect.disabled = false;
+                var cities = citiesByRegion[region].slice().sort();
+                for (var i = 0; i < cities.length; i++) {
+                    var opt = document.createElement('option');
+                    opt.value = cities[i];
+                    opt.textContent = cities[i];
+                    citySelect.appendChild(opt);
+                }
+            } else { citySelect.disabled = true; }
+        }
+
+        function updateTrempCities() {
+            var regionSelect = document.getElementById('trempRegion');
+            var citySelect = document.getElementById('trempCity');
             var region = regionSelect.value;
             citySelect.innerHTML = '<option value="">בחר עיר</option>';
             if (region && citiesByRegion[region]) {
@@ -611,8 +973,24 @@
             document.getElementById('city').disabled = true;
             var radios = document.querySelectorAll('input[name="direction"]');
             for (var i = 0; i < radios.length; i++) radios[i].checked = false;
-            var wrappers = document.querySelectorAll('.radio-wrapper');
+            var wrappers = document.querySelectorAll('#directionGroup .radio-wrapper');
             for (var i = 0; i < wrappers.length; i++) wrappers[i].classList.remove('selected');
+        }
+
+        function clearTrempForm() {
+            document.getElementById('trempDriver').value = '';
+            document.getElementById('trempPhone').value = '';
+            document.getElementById('trempRegion').value = '';
+            document.getElementById('trempCity').innerHTML = '<option value="">בחר אזור תחילה</option>';
+            document.getElementById('trempCity').disabled = true;
+            document.getElementById('trempSeats').value = '';
+            document.getElementById('trempTime').value = '';
+            document.getElementById('trempNotes').value = '';
+            var radios = document.querySelectorAll('input[name="trempDirection"]');
+            for (var i = 0; i < radios.length; i++) radios[i].checked = false;
+            var wrappers = document.querySelectorAll('#trempDirectionGroup .radio-wrapper');
+            for (var i = 0; i < wrappers.length; i++) wrappers[i].classList.remove('selected');
+            showToast('הטופס נוקה');
         }
 
         function addParticipant() {
@@ -643,6 +1021,41 @@
             updateStats();
             clearForm();
             showToast(name + ' נוסף/ה בהצלחה!');
+        }
+
+        function addTremp() {
+            var driver = document.getElementById('trempDriver').value.trim();
+            var phone = document.getElementById('trempPhone').value.trim();
+            var region = document.getElementById('trempRegion').value;
+            var city = document.getElementById('trempCity').value;
+            var seats = document.getElementById('trempSeats').value;
+            var time = document.getElementById('trempTime').value;
+            var notes = document.getElementById('trempNotes').value.trim();
+            var directionEl = document.querySelector('input[name="trempDirection"]:checked');
+
+            if (!driver) { showToast('נא להזין שם נהג'); return; }
+            if (!phone) { showToast('נא להזין טלפון'); return; }
+            if (!region) { showToast('נא לבחור אזור'); return; }
+            if (!city) { showToast('נא לבחור עיר'); return; }
+            if (!seats) { showToast('נא לבחור מספר מקומות'); return; }
+            if (!directionEl) { showToast('נא לבחור כיוון'); return; }
+
+            tremps.push({
+                id: Date.now(),
+                driver: driver,
+                phone: phone,
+                region: region,
+                city: city,
+                seats: parseInt(seats),
+                time: time,
+                notes: notes,
+                direction: directionEl.value
+            });
+
+            saveTremps();
+            renderTremps();
+            clearTrempForm();
+            showToast('הטרמפ נוסף בהצלחה!');
         }
 
         function switchToTab(region) {
@@ -704,6 +1117,39 @@
             document.getElementById('bothCount').textContent = participants.filter(function(p) { return p.direction === 'both'; }).length;
         }
 
+        function renderTremps() {
+            var container = document.getElementById('trempsList');
+            if (tremps.length === 0) {
+                container.innerHTML = '<div class="empty-state"><div class="empty-state-icon">🚗</div><p>אין טרמפים עדיין</p></div>';
+                return;
+            }
+            
+            var html = '';
+            for (var i = 0; i < tremps.length; i++) {
+                var t = tremps[i];
+                var dir = t.direction === 'going' ? '➡️ הלוך' : (t.direction === 'return' ? '⬅️ חזור' : '↔️ הלוך + חזור');
+                html += '<div class="tremp-card">';
+                html += '<div class="tremp-header">';
+                html += '<span class="tremp-driver">🚗 ' + t.driver + '</span>';
+                html += '<span class="tremp-seats">' + t.seats + ' מקומות פנויים</span>';
+                html += '</div>';
+                html += '<div class="tremp-details">';
+                html += '<div class="tremp-detail">📍 ' + regionNames[t.region] + ' - ' + t.city + '</div>';
+                html += '<div class="tremp-detail">📞 ' + t.phone + '</div>';
+                html += '<div class="tremp-detail">' + dir + '</div>';
+                if (t.time) html += '<div class="tremp-detail">🕐 ' + t.time + '</div>';
+                if (t.notes) html += '<div class="tremp-detail">📝 ' + t.notes + '</div>';
+                html += '</div>';
+                html += '<div class="tremp-actions">';
+                html += '<a href="tel:' + t.phone + '" class="btn btn-info">📞 התקשר</a>';
+                html += '<a href="https://wa.me/972' + t.phone.replace(/^0/, '').replace(/-/g, '') + '" target="_blank" class="btn btn-whatsapp">💬 וואטסאפ</a>';
+                html += '<button onclick="deleteTremp(' + i + ')" class="btn btn-danger">✕</button>';
+                html += '</div>';
+                html += '</div>';
+            }
+            container.innerHTML = html;
+        }
+
         function shareWhatsApp() {
             if (participants.length === 0) { showToast('אין משתתפים לשיתוף'); return; }
             var text = '🚌 *רשימת הסעות לכנס האומה*\n';
@@ -729,8 +1175,158 @@
             window.open('https://wa.me/?text=' + encodeURIComponent(text), '_blank');
         }
 
+        function shareTrempsWhatsApp() {
+            if (tremps.length === 0) { showToast('אין טרמפים לשיתוף'); return; }
+            var text = '🚗 *לוח טרמפים לכנס האומה*\n';
+            text += '━━━━━━━━━━━━━━━\n\n';
+            for (var i = 0; i < tremps.length; i++) {
+                var t = tremps[i];
+                var dir = t.direction === 'going' ? '➡️ הלוך' : (t.direction === 'return' ? '⬅️ חזור' : '↔️ הלוך + חזור');
+                text += '🚗 *' + t.driver + '*\n';
+                text += '📍 ' + regionNames[t.region] + ' - ' + t.city + '\n';
+                text += '💺 ' + t.seats + ' מקומות פנויים\n';
+                text += '📞 ' + t.phone + '\n';
+                text += dir + '\n';
+                if (t.time) text += '🕐 ' + t.time + '\n';
+                if (t.notes) text += '📝 ' + t.notes + '\n';
+                text += '\n';
+            }
+            window.open('https://wa.me/?text=' + encodeURIComponent(text), '_blank');
+        }
+
+        // Search functionality
+        function performSearch() {
+            var searchText = document.getElementById('searchText').value.toLowerCase();
+            var searchRegion = document.getElementById('searchRegion').value;
+            var searchType = document.getElementById('searchType').value;
+            var container = document.getElementById('searchResults');
+            
+            var results = [];
+            
+            // Search participants
+            if (searchType === 'all' || searchType === 'participants') {
+                var filteredParticipants = participants.filter(function(p) {
+                    var matchText = !searchText || p.name.toLowerCase().includes(searchText) || p.phone.includes(searchText) || p.city.toLowerCase().includes(searchText);
+                    var matchRegion = !searchRegion || p.region === searchRegion;
+                    return matchText && matchRegion;
+                });
+                filteredParticipants.forEach(function(p, idx) {
+                    results.push({ type: 'participant', data: p, index: participants.indexOf(p) });
+                });
+            }
+            
+            // Search tremps
+            if (searchType === 'all' || searchType === 'tremps') {
+                var filteredTremps = tremps.filter(function(t) {
+                    var matchText = !searchText || t.driver.toLowerCase().includes(searchText) || t.phone.includes(searchText) || t.city.toLowerCase().includes(searchText);
+                    var matchRegion = !searchRegion || t.region === searchRegion;
+                    return matchText && matchRegion;
+                });
+                filteredTremps.forEach(function(t, idx) {
+                    results.push({ type: 'tremp', data: t, index: tremps.indexOf(t) });
+                });
+            }
+            
+            if (results.length === 0) {
+                container.innerHTML = '<div class="empty-state"><div class="empty-state-icon">🔍</div><p>לא נמצאו תוצאות</p></div>';
+                return;
+            }
+            
+            var html = '<p style="margin-bottom:15px;color:#8b6914;font-size:1.1rem;">נמצאו ' + results.length + ' תוצאות</p>';
+            
+            results.forEach(function(r) {
+                if (r.type === 'participant') {
+                    var p = r.data;
+                    html += '<div class="tremp-card">';
+                    html += '<div class="tremp-header"><span class="tremp-driver">👤 ' + p.name + '</span><span class="tremp-seats">משתתף</span></div>';
+                    html += '<div class="tremp-details">';
+                    html += '<div class="tremp-detail">📍 ' + regionNames[p.region] + ' - ' + p.city + '</div>';
+                    html += '<div class="tremp-detail">📞 ' + p.phone + '</div>';
+                    html += '<div class="tremp-detail">' + directionText[p.direction] + '</div>';
+                    html += '</div></div>';
+                } else {
+                    var t = r.data;
+                    html += '<div class="tremp-card">';
+                    html += '<div class="tremp-header"><span class="tremp-driver">🚗 ' + t.driver + '</span><span class="tremp-seats">' + t.seats + ' מקומות</span></div>';
+                    html += '<div class="tremp-details">';
+                    html += '<div class="tremp-detail">📍 ' + regionNames[t.region] + ' - ' + t.city + '</div>';
+                    html += '<div class="tremp-detail">📞 ' + t.phone + '</div>';
+                    html += '<div class="tremp-detail">' + directionText[t.direction] + '</div>';
+                    if (t.time) html += '<div class="tremp-detail">🕐 ' + t.time + '</div>';
+                    html += '</div></div>';
+                }
+            });
+            
+            container.innerHTML = html;
+        }
+
+        // Region Summary
+        function renderRegionSummary() {
+            var container = document.getElementById('regionSummary');
+            var detailsContainer = document.getElementById('regionDetails');
+            var regions = ['north', 'center', 'shfela', 'south'];
+            
+            var html = '';
+            regions.forEach(function(region) {
+                var count = participants.filter(function(p) { return p.region === region; }).length;
+                var trempCount = tremps.filter(function(t) { return t.region === region; }).length;
+                var totalSeats = tremps.filter(function(t) { return t.region === region; }).reduce(function(sum, t) { return sum + t.seats; }, 0);
+                
+                html += '<div class="region-card" onclick="showRegionDetails(\'' + region + '\')">';
+                html += '<div class="region-name">📍 ' + regionNames[region] + '</div>';
+                html += '<div class="region-count">' + count + '</div>';
+                html += '<div class="region-label">משתתפים</div>';
+                html += '<div style="margin-top:10px;font-size:0.9rem;color:#5a4a20;">🚗 ' + trempCount + ' טרמפים | 💺 ' + totalSeats + ' מקומות</div>';
+                html += '</div>';
+            });
+            
+            container.innerHTML = html;
+            detailsContainer.innerHTML = '';
+        }
+
+        function showRegionDetails(region) {
+            var container = document.getElementById('regionDetails');
+            var regionParticipants = participants.filter(function(p) { return p.region === region; });
+            var regionTremps = tremps.filter(function(t) { return t.region === region; });
+            
+            // Group by city
+            var cities = {};
+            regionParticipants.forEach(function(p) {
+                if (!cities[p.city]) cities[p.city] = [];
+                cities[p.city].push(p);
+            });
+            
+            var html = '<div class="card" style="margin-top:20px;">';
+            html += '<h2 class="card-title">פירוט ' + regionNames[region] + '</h2>';
+            
+            html += '<h3 style="color:#8b6914;margin-bottom:15px;">👥 משתתפים לפי עיר:</h3>';
+            
+            Object.keys(cities).sort().forEach(function(city) {
+                html += '<div style="margin-bottom:15px;padding:15px;background:#faf6e8;border-radius:10px;">';
+                html += '<strong style="color:#8b6914;">' + city + ' (' + cities[city].length + ')</strong>';
+                html += '<ul style="margin-top:10px;padding-right:20px;">';
+                cities[city].forEach(function(p) {
+                    html += '<li>' + p.name + ' - ' + p.phone + ' - ' + directionText[p.direction] + '</li>';
+                });
+                html += '</ul></div>';
+            });
+            
+            if (regionTremps.length > 0) {
+                html += '<h3 style="color:#8b6914;margin:20px 0 15px;">🚗 טרמפים זמינים:</h3>';
+                regionTremps.forEach(function(t) {
+                    html += '<div class="tremp-card">';
+                    html += '<strong>' + t.driver + '</strong> - ' + t.city + ' | ' + t.seats + ' מקומות | ' + t.phone;
+                    html += '</div>';
+                });
+            }
+            
+            html += '</div>';
+            container.innerHTML = html;
+        }
+
         // ========== EVENT LISTENERS ==========
         document.getElementById('region').addEventListener('change', updateCities);
+        document.getElementById('trempRegion').addEventListener('change', updateTrempCities);
         document.getElementById('addBtn').addEventListener('click', addParticipant);
         document.getElementById('clearFormBtn').addEventListener('click', function() { clearForm(); showToast('הטופס נוקה'); });
         document.getElementById('tabsContainer').addEventListener('click', function(e) {
@@ -740,7 +1336,15 @@
         document.getElementById('directionGroup').addEventListener('click', function(e) {
             var wrapper = e.target.closest('.radio-wrapper');
             if (wrapper) {
-                var wrappers = document.querySelectorAll('.radio-wrapper');
+                var wrappers = document.querySelectorAll('#directionGroup .radio-wrapper');
+                for (var i = 0; i < wrappers.length; i++) wrappers[i].classList.remove('selected');
+                wrapper.classList.add('selected');
+            }
+        });
+        document.getElementById('trempDirectionGroup').addEventListener('click', function(e) {
+            var wrapper = e.target.closest('.radio-wrapper');
+            if (wrapper) {
+                var wrappers = document.querySelectorAll('#trempDirectionGroup .radio-wrapper');
                 for (var i = 0; i < wrappers.length; i++) wrappers[i].classList.remove('selected');
                 wrapper.classList.add('selected');
             }
@@ -751,6 +1355,7 @@
         loadData();
         renderAllTabs();
         updateStats();
+        renderTremps();
     </script>
 </body>
 </html>
